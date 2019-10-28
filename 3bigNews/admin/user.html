@@ -88,25 +88,34 @@
         // 修改用户信息.......................................
 
       $('.btn-edit').click(function() {
-        console.log(123);
+          console.log(123);
 
-        //   使用表单对象获取数据
-        const data = new FormData($('form')[0]);
+          //   使用表单对象获取数据
+          const data = new FormData($('form')[0]);
 
-        // 调用接口 保存修改后数据
-        $.ajax({
-          url: BigNew.user_edit,
-          type: 'post',
-          data: data,
-          contentType: false,
-          processData: false,
-          success(backData) {
-            console.log(backData);
-            if (backData.code == 200) {
-              alert('修改成功')
+          // 调用接口 保存修改后数据
+          $.ajax({
+            url: BigNew.user_edit,
+            type: 'post',
+            data: data,
+            contentType: false,
+            processData: false,
+            success(backData) {
+              console.log(backData);
+              if (backData.code == 200) {
+                alert('修改成功')
+                  // 修改成功不仅要更新当前页还要跟新它的父元素
+                window.parent.location.reload();
+              }
             }
-          }
+          })
         })
+        //   图片预览
+      $('#exampleInputFile').change(function() {
+        // 获取输入框的文件 通过DOM对象获取的 DOM对象.files[0]
+        const url = URL.createObjectURL(this.files[0]);
+        // 把获取的路径设置给图片的src属性
+        $('.user_pic').attr('src', url);
       })
     })
   </script>
