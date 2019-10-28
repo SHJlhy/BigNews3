@@ -61,10 +61,35 @@
     // 点击文章管理 展示下面的内容，再次点击折叠内容
     $(function() {
       $('.menu .level01:nth-child(2)').click(function() {
-        // console.log(123);
-        // 它的兄弟level02展示出来，再次点击折叠
-        $(this).siblings('.level02').slideToggle();
+          // console.log(123);
+          // 它的兄弟level02展示出来，再次点击折叠
+          $(this).siblings('.level02').slideToggle();
+        })
+        // 登录进入首页获取用户的信息  调用接口
+      $.ajax({
+        url: BigNew.user_info,
+        success(backData) {
+          console.log(backData);
+          if (backData.code == 200) {
+            $('.user_info>img').attr('src', backData.data.userPic);
+            $('.user_center_link>img').attr('src', backData.data.userPic);
+            $('.user_info>span').text(backData.data.nickname);
+
+
+
+          }
+
+
+        }
+
+
       })
+
+
+
+
+
+
     })
   </script>
 </body>
