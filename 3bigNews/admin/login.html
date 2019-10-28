@@ -33,11 +33,42 @@
         <i class="iconfont icon-key"></i>
         <input type="text" class="input_txt" placeholder="邮箱/手机号" />
         <input type="password" class="input_pass" placeholder="密码" />
-        <input type="submit" class="input_sub" value="登 录" />
+        <input type="button" class="input_sub" value="登 录" />
       </form>
     </div>
   </div>
-
+  <script>
+    $('.input_sub').click(function() {
+      // 分析 点击 登录按钮 如果用户输入内容有空 则提示，非空调用接口
+      // 获取内容
+      const username = $('.input_txt').val();
+      const password = $('.input_pass').val();
+      // 判断
+      if (username == '' || password == '') {
+        alert('请输入内容');
+      }
+      // 非空调用接口
+      $.ajax({
+        url: BigNew.user_login,
+        type: 'post',
+        data: {
+          username,
+          password,
+        },
+        success(backData) {
+          console.log(backData);
+          if (backData.code == 200) {
+            // 登录成功 页面跳转到首页
+            location.href = "./index.html";
+            // 保存token信息
+            localStorage.setItem('token', backData.token);
+          }
+          // 如果输入错误的代码已经设置在全局变量中， 不用在这里写了
+        }
+      })
+    })
+  </script>
 </body>
+
 
 </html>
